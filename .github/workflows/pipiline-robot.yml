@@ -1,0 +1,17 @@
+name: Pipiline Test
+
+on: push
+
+jobs:
+ test:
+   runs-on: ubuntu-latest
+
+   steps:
+     - name: Clonagem Projeto
+       uses: actions/ckeckout@v3
+
+     - name: Configuração do Python
+       uses: actions/steup-python@v2
+       with:
+        python-version: '3.12'
+        
