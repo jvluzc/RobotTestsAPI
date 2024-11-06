@@ -8,7 +8,7 @@ jobs:
 
    steps:
      - name: Clonagem Projeto
-       uses: actions/ckeckout@v3
+       uses: actions/checkout@v3
 
      - name: Configuração do Python
        uses: actions/setup-python@v2
