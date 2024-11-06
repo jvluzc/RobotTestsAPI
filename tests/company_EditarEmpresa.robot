@@ -5,7 +5,7 @@ Resource    ../resources/randomicos_keywords.robot
 Documentation    Tests Cases para validar a PBI de "Editar Cadastro de Empresa": feature de "Company".
 
 *** Test Cases ***
-# comando rodar os testes: robot -d ./logs .\tests\company_EditarEmpresa.robot
+# comando rodar os testes: robot -d ./results .\tests\company_EditarEmpresa.robot
 
 Editar Cadastro de Empresa Com Sucesso
     ${corporate_Name}=     Gerar Nome Empresa

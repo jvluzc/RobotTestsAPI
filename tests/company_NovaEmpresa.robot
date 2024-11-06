@@ -8,7 +8,7 @@ Documentation    Tests Cases para validar os endpoints relacionaos a feature de 
 
 # Teste usando a keyword com parâmetros
 Criação de Nova Empresa
-#robot -d ./logs .\tests\company_NovaEmpresa.robot
+#robot -d ./results .\tests\company_NovaEmpresa.robot
     ${corporate_Name}=     Gerar Nome Empresa
     ${register_Company}=   Gerar Numero 14 Digitos
     ${matriz}=  Gerar Valor Alfanumerico 14 caracteres

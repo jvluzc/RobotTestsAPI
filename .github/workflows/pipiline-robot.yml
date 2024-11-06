@@ -14,4 +14,21 @@ jobs:
        uses: actions/setup-python@v2
        with:
         python-version: '3.12'
+    
+     - name: Instalar Dependências do Projeto
+       run: |
+         pip install robotframework
+         pip install robotframework-requests
+         pip install robotframework-faker
+         pip install robotframework-jsonlibrary
+    
+     - name: Execução dos Testes de API com Robot
+       run: |
+         robot -d ./results .\tests\
+
+     - name: Salvando Resultado dos Testes
+       uses: actions/upload-artifact@v3
+       with:
+        name: resultado-testes
+        path: ./results
 
