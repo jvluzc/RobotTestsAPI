@@ -10,7 +10,7 @@ jobs:
        contents: read
        pages: write
        id-token: write
-    environment:
+   environment:
         name: github-pages
         url: https://jvluzc.github.io/RobotTestsAPI/report.html
 
