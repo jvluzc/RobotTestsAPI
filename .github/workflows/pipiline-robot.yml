@@ -22,7 +22,6 @@ jobs:
          pip install robotframework-faker
          pip install robotframework-jsonlibrary
          pip install setuptools
-         pip install -r requirements.txt
 
     
      - name: Execução dos Testes de API com Robot
