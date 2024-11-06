@@ -6,6 +6,14 @@ jobs:
  test:
    runs-on: ubuntu-latest
 
+   permissions:
+       contents: read
+       pages: write
+       id-token: write
+    environment:
+        name: github-pages
+        url: https://jvluzc.github.io/RobotTestsAPI/report.html
+
    steps:
      - name: Clonagem Projeto
        uses: actions/checkout@v3
@@ -13,7 +21,7 @@ jobs:
      - name: Configuração do Python
        uses: actions/setup-python@v2
        with:
-        python-version: '3.12'
+         python-version: '3.12'
     
      - name: Instalar Dependências do Projeto
        run: |
@@ -26,12 +34,26 @@ jobs:
     
      - name: Execução dos Testes de API com Robot
        run: |
-         robot -d ./results ./tests/
+         robot --outputdir results/ tests/
 
      - name: Salvando Resultado dos Testes
        uses: actions/upload-artifact@v3
        if: always()
        with:
-        name: resultado-testes
-        path: ./results
-
+         name: resultado-testes
+         path: /results
+    
+     - name: Configurar Site de Relatório dos Testes
+       uses: actions/configure-pages@v2
+       if: always()
+    
+     - name: Upload artifact
+       uses: actions/upload-pages-artifact@v1
+       if: always()
+       with:
+         path: results/
+    
+     - name: Subir Site de Relatório dos Testes
+       id: deployment
+       uses: actions/deploy-pages@v1
+       if: always()
