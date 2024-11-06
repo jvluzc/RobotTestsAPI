@@ -24,7 +24,7 @@ jobs:
     
      - name: Execução dos Testes de API com Robot
        run: |
-         robot -d ./results .\tests\
+         robot -d ./results ./tests/
 
      - name: Salvando Resultado dos Testes
        uses: actions/upload-artifact@v3
