@@ -11,7 +11,7 @@ jobs:
        uses: actions/ckeckout@v3
 
      - name: Configuração do Python
-       uses: actions/steup-python@v2
+       uses: actions/setup-python@v2
        with:
         python-version: '3.12'
-        
+
