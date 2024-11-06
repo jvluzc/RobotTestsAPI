@@ -3,7 +3,7 @@ Resource    resource.robot
 Documentation    Keywords para testar a feature de Auth/Login
 
 *** Variables ***
-${baseURL}        https://ron-bugadossssssssssssssssssssssssssss.qacoders.dev.br
+${baseURL}        https://ron-bugado.qacoders.dev.br
 
 
 *** Keywords ***
