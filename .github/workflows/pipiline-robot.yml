@@ -26,14 +26,15 @@ jobs:
 
       - name: Execução dos Testes de API com Robot
         run: |
-          robot --name "Test Suite" --outputdir results/ --output output_api.xml tests/api/
+          mkdir -p results/api/
+          robot --name "Test Suite" --outputdir results/api/ --output output_api.xml tests/api/
 
       - name: Resultados dos Testes - API
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: resultado-testes-api
-          path: results/
+          path: results/api/
 
   test_web:
     name: Web Tests - Robot
@@ -54,14 +55,15 @@ jobs:
 
       - name: Execução dos Testes WEB com Robot
         run: |
-          robot --name "Test Suite" --outputdir results/ --output output_web.xml tests/web/
+          mkdir -p results/web/
+          robot --name "Test Suite" --outputdir results/web/ --output output_web.xml tests/web/
   
       - name: Resultados dos Testes - WEB
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: resultado-testes-web
-          path: results/
+          path: results/web/
 
   merge:
     name: Merge Reports
@@ -84,17 +86,17 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: resultado-testes-api
-          path: results/
+          path: results/api/
 
       - name: Download Artifacts - WEB
         uses: actions/download-artifact@v4
         with:
           name: resultado-testes-web
-          path: results/
+          path: results/web/
 
       - name: Merge Reports
         run: |
-          rebot --merge results/output_api.xml results/output_web.xml --output merged_output.xml
+          rebot --merge results/api/output_api.xml results/web/output_web.xml --output merged_output.xml
           ls -a
 
       - name: Upload Merge Report
