@@ -1,70 +1,69 @@
-name: Pipiline Test
+name: Pipeline Test
 
 on: push
 
 jobs:
- test_api:
-   name: API Tests - Robot
-   runs-on: ubuntu-latest
+  test_api:
+    name: API Tests - Robot
+    runs-on: ubuntu-latest
 
-   steps:
-     - name: Checkout do repositório - API # run: echo Fazendo checkout do repositorio
-       uses: actions/checkout@v4
+    steps:
+      - name: Checkout do repositório - API
+        uses: actions/checkout@v4
 
-     - name: Instalação e Configuração do Python - API # run: echo Instalação da versão 3.12 do Python
-       uses: actions/setup-python@v5
-       with:
-         python-version: '3.12'
+      - name: Instalação e Configuração do Python - API
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
     
-     - name: Instalar Dependências do Projeto - API # run: echo Instalação das depedências do Projeto
-       run: |
-         pip install robotframework
-         pip install robotframework-requests
-         pip install robotframework-faker
-         pip install robotframework-jsonlibrary
-         pip install setuptools
+      - name: Instalar Dependências do Projeto - API
+        run: |
+          pip install robotframework
+          pip install robotframework-requests
+          pip install robotframework-faker
+          pip install robotframework-jsonlibrary
+          pip install setuptools
 
-    
-     - name: Execução dos Testes de API com Robot # run: echo Executando os testes de API do Robot
-       run: |
-         robot --name "API and Web Tests" --outputdir results/ tests/api/
+      - name: Execução dos Testes de API com Robot
+        run: |
+          robot --name "API Tests" --outputdir results/ --output output_api.xml tests/api/
 
-     - name: Resultados dos Testes - API # run: echo Salvando o Report dos Testes
-       uses: actions/upload-artifact@v4
-       if: always()
-       with:
-         name: resultado-testes-api
-         path: results/
+      - name: Resultados dos Testes - API
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resultado-testes-api
+          path: results/
 
- test_web:
-   name: Web Tests - Robot
-   runs-on: ubuntu-latest
+  test_web:
+    name: Web Tests - Robot
+    runs-on: ubuntu-latest
 
-   steps:
-    - name: Checkout do repositório - WEB # run: echo Fazendo checkout do repositorio
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout do repositório - WEB
+        uses: actions/checkout@v4
 
-    - name: Instalação e Configuração do Python - WEB # run: echo Instalação da versão 3.12 do Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.12'
+      - name: Instalação e Configuração do Python - WEB
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-    - name: Instalar Dependências do Projeto - WEB # run: echo Instalação das depedências do Projeto
-      run: |
-       pip install robotframework-seleniumlibrary
+      - name: Instalar Dependências do Projeto - WEB
+        run: |
+          pip install robotframework-seleniumlibrary
 
-    - name:  Execução dos Testes WEB com Robot # run: echo Executando os testes de API do Robot
-      run: |
-       robot --name "API and Web Tests" --outputdir results/ tests/web/
+      - name: Execução dos Testes WEB com Robot
+        run: |
+          robot --name "Web Tests" --outputdir results/ --output output_web.xml tests/web/
   
-    - name: Resultados dos Testes - WEB  # run: echo Salvando o Report dos Testes
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-       name: resultado-testes-web
-       path: results/
+      - name: Resultados dos Testes - WEB
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resultado-testes-web
+          path: results/
 
- merge:
+  merge:
     name: Merge Reports
     runs-on: ubuntu-latest
     needs: 
@@ -72,18 +71,25 @@ jobs:
       - test_web
 
     steps:
-      - name: Set up Python  # run: echo Instalação da versão 3.12 do Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install dependencies  # run: echo Instalação das depedências do Projeto
+      - name: Install dependencies
         run: |
           pip install robotframework
 
-      - name: Download Artifacts
+      - name: Download Artifacts - API
         uses: actions/download-artifact@v4
-        with: 
+        with:
+          name: resultado-testes-api
+          path: results/
+
+      - name: Download Artifacts - WEB
+        uses: actions/download-artifact@v4
+        with:
+          name: resultado-testes-web
           path: results/
 
       - name: Merge Reports
@@ -91,25 +97,25 @@ jobs:
           rebot --merge results/output_api.xml results/output_web.xml --output merged_output.xml
           ls -a
 
-      - name: Upload Merge Report # run: echo Salvando o Report dos Testes
+      - name: Upload Merge Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: robot-framework-report
-          path: ./*.html
+          path: merged_output.xml
 
- deploy:
+  deploy:
     name: Deploy GitHub Pages 🌐
     runs-on: ubuntu-latest
     needs: 
       - merge
     permissions:
-        contents: read
-        pages: write
-        id-token: write
+      contents: read
+      pages: write
+      id-token: write
     environment:
-         name: github-pages
-         url: https://jvluzc.github.io/RobotTestsAPI/report.html
+      name: github-pages
+      url: https://jvluzc.github.io/RobotTestsAPI/report.html
     steps:
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -122,9 +128,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./
+          path: ./merged_output.xml
 
       - name: Deploy to Github Pages
         id: deployment
-        uses: actions/deploy-pages@v4  
-        
+        uses: actions/deploy-pages@v4
