@@ -26,7 +26,7 @@ jobs:
 
       - name: Execução dos Testes de API com Robot
         run: |
-          robot --name "API Tests" --outputdir results/ --output output_api.xml tests/api/
+          robot --name "Test Suite" --outputdir results/ --output output_api.xml tests/api/
 
       - name: Resultados dos Testes - API
         uses: actions/upload-artifact@v4
@@ -54,7 +54,7 @@ jobs:
 
       - name: Execução dos Testes WEB com Robot
         run: |
-          robot --name "Web Tests" --outputdir results/ --output output_web.xml tests/web/
+          robot --name "Test Suite" --outputdir results/ --output output_web.xml tests/web/
   
       - name: Resultados dos Testes - WEB
         uses: actions/upload-artifact@v4
