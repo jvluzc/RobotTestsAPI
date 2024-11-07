@@ -27,7 +27,7 @@ jobs:
       - name: Execução dos Testes de API com Robot
         run: |
           mkdir -p results/api/
-          robot --name "Test Suite" --outputdir results/api/ --output output_api.xml tests/api/
+          robot --name "Test Suite" --outputdir results/api/ --output results/api/output_api.xml tests/api/
 
       - name: Resultados dos Testes - API
         uses: actions/upload-artifact@v4
@@ -56,7 +56,7 @@ jobs:
       - name: Execução dos Testes WEB com Robot
         run: |
           mkdir -p results/web/
-          robot --name "Test Suite" --outputdir results/web/ --output output_web.xml tests/web/
+          robot --name "Test Suite" --outputdir results/web/ --output results/web/output_web.xml tests/web/
   
       - name: Resultados dos Testes - WEB
         uses: actions/upload-artifact@v4
@@ -93,6 +93,11 @@ jobs:
         with:
           name: resultado-testes-web
           path: results/web/
+
+      - name: List Files in Results Directory
+        run: |
+          echo "Verificando arquivos no diretório de resultados:"
+          ls -R results/
 
       - name: Merge Reports
         run: |
@@ -134,4 +139,4 @@ jobs:
 
       - name: Deploy to Github Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
