@@ -88,7 +88,7 @@ jobs:
 
       - name: Merge Reports
         run: |
-          rebot --merge results/robot-framework-report-api/output.xml results/robot-framework-report-web/output.xml
+          rebot --merge results/output_api.xml results/output_web.xml --output merged_output.xml
           ls -a
 
       - name: Upload Merge Report # run: echo Salvando o Report dos Testes
