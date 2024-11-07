@@ -81,6 +81,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install robotframework
+          pip install robotframework-requests
+          pip install robotframework-faker
+          pip install robotframework-jsonlibrary
+          pip install setuptools
+          pip install robotframework-seleniumlibrary
 
       - name: Download Artifacts - API
         uses: actions/download-artifact@v4
