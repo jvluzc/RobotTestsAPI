@@ -61,6 +61,6 @@ Test Teardown   Fechar Navegador
 #     Validar redirecionamento para página "Primeiro acesso / Acesse aqui"
 
 #Executar os testes:
-  #1. robot .\tests                               isso vai executar todos os arquivos de testes que estiverem dentro da pasta "tests".
-  #2. robot -d results .\tests\                   vai criar uma pasta chamada "results" e guardar o resultado de cada execução de testes na pasta que foi criada.
-  #3. robot -d results .\tests\login.robot        vai executar apenas os testes que estiverem dentro do arquivo "login.robot" e guaradr os resultados na pasta "results".
+  #1. robot .\tests\web                                 isso vai executar todos os arquivos de testes que estiverem dentro da pasta "tests".
+  #2. robot -d results .\tests\web                  vai criar uma pasta chamada "results" e guardar o resultado de cada execução de testes na pasta que foi criada.
+  #3. robot -d results .\tests\web\login.robot        vai executar apenas os testes que estiverem dentro do arquivo "login.robot" e guaradr os resultados na pasta "results".
