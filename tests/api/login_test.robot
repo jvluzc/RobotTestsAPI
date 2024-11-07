@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../resources/login_keywords.robot
+Resource    ../../resources/api/login_keywords.robot
 Documentation    Tests Cases para validar os endpoints relacionaos ao LOGIN da feature de Auth/Login
 
 *** Test Cases ***

@@ -1,6 +1,6 @@
 *** Settings ***
 Resource    resource.robot
-Resource    ../resources/login_keywords.robot
+Resource    ../../resources/api/login_keywords.robot
 
 Documentation    Keywords para testar a feature de Company
 

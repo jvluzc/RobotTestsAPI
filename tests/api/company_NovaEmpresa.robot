@@ -1,7 +1,7 @@
 *** Settings ***
-Resource    ../resources/login_keywords.robot
-Resource    ../resources/company_keywords.robot
-Resource    ../resources/randomicos_keywords.robot
+Resource    ../../resources/api/login_keywords.robot
+Resource    ../../resources/api/company_keywords.robot
+Resource    ../../resources/api/randomicos_keywords.robot
 Documentation    Tests Cases para validar os endpoints relacionaos a feature de Company
 
 *** Test Cases ***

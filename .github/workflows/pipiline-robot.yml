@@ -3,27 +3,20 @@ name: Pipiline Test
 on: push
 
 jobs:
- test:
+ test_api:
+   name: API Tests - Robot
    runs-on: ubuntu-latest
 
-   permissions:
-       contents: read
-       pages: write
-       id-token: write
-   environment:
-        name: github-pages
-        url: https://jvluzc.github.io/RobotTestsAPI/report.html
-
    steps:
-     - name: Clonagem Projeto
-       uses: actions/checkout@v3
+     - name: Checkout do repositório - API # run: echo Fazendo checkout do repositorio
+       uses: actions/checkout@v4
 
-     - name: Configuração do Python
-       uses: actions/setup-python@v2
+     - name: Instalação e Configuração do Python - API # run: echo Instalação da versão 3.12 do Python
+       uses: actions/setup-python@v5
        with:
          python-version: '3.12'
     
-     - name: Instalar Dependências do Projeto
+     - name: Instalar Dependências do Projeto - API # run: echo Instalação das depedências do Projeto
        run: |
          pip install robotframework
          pip install robotframework-requests
@@ -32,28 +25,106 @@ jobs:
          pip install setuptools
 
     
-     - name: Execução dos Testes de API com Robot
+     - name: Execução dos Testes de API com Robot # run: echo Executando os testes de API do Robot
        run: |
-         robot --outputdir results/ tests/
+         robot --name "API and Web Tests" --outputdir results/ tests/api/
 
-     - name: Salvando Resultado dos Testes
+     - name: Resultados dos Testes - API # run: echo Salvando o Report dos Testes
        uses: actions/upload-artifact@v4
        if: always()
        with:
-         name: resultado-testes
+         name: resultado-testes-api
          path: results/
-    
-     - name: Configurar Site de Relatório dos Testes
-       uses: actions/configure-pages@v2
-       if: always()
-    
-     - name: Upload artifact
-       uses: actions/upload-pages-artifact@v2
-       if: always()
-       with:
-         path: results/
-    
-     - name: Subir Site de Relatório dos Testes
-       id: deployment
-       uses: actions/deploy-pages@v1
-       if: always()
+
+ test_web:
+   name: Web Tests - Robot
+   runs-on: ubuntu-latest
+
+   steps:
+    - name: Checkout do repositório - WEB # run: echo Fazendo checkout do repositorio
+      uses: actions/checkout@v4
+
+    - name: Instalação e Configuração do Python - WEB # run: echo Instalação da versão 3.12 do Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Instalar Dependências do Projeto - WEB # run: echo Instalação das depedências do Projeto
+      run: |
+       pip install robotframework-seleniumlibrary
+
+    - name:  Execução dos Testes WEB com Robot # run: echo Executando os testes de API do Robot
+      run: |
+       robot --name "API and Web Tests" --outputdir results/ tests/web/
+  
+    - name: Resultados dos Testes - WEB  # run: echo Salvando o Report dos Testes
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+       name: resultado-testes-web
+       path: results/
+
+ merge:
+    name: Merge Reports
+    runs-on: ubuntu-latest
+    needs: 
+      - test_api
+      - test_web
+
+    steps:
+      - name: Set up Python  # run: echo Instalação da versão 3.12 do Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies  # run: echo Instalação das depedências do Projeto
+        run: |
+          pip install robotframework
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with: 
+          path: results/
+
+      - name: Merge Reports
+        run: |
+          rebot --merge results/robot-framework-report-api/output.xml results/robot-framework-report-web/output.xml
+          ls -a
+
+      - name: Upload Merge Report # run: echo Salvando o Report dos Testes
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: robot-framework-report
+          path: ./*.html
+
+ deploy:
+    name: Deploy GitHub Pages 🌐
+    runs-on: ubuntu-latest
+    needs: 
+      - merge
+    permissions:
+        contents: read
+        pages: write
+        id-token: write
+    environment:
+         name: github-pages
+         url: https://jvluzc.github.io/RobotTestsAPI/report.html
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with: 
+          name: robot-framework-report
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./
+
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        
