@@ -27,13 +27,13 @@ jobs:
       - name: Execução dos Testes de API com Robot
         run: |
           mkdir -p results/api/
-          robot --name "Test Suite" --outputdir results/api/ --output output_api.xml tests/api/
+          robot --name "API and Web Tests" --outputdir results/api/ --output output.xml tests/api/
 
       - name: Resultados dos Testes - API
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: resultado-testes-api
+          name: robot-framework-report-api
           path: results/api/
 
   test_web:
@@ -56,13 +56,13 @@ jobs:
       - name: Execução dos Testes WEB com Robot
         run: |
           mkdir -p results/web/
-          robot --name "Test Suite" --outputdir results/web/ --output output_web.xml tests/web/
+          robot --name "API and Web Tests" --outputdir results/web/ --output output.xml tests/web/
   
       - name: Resultados dos Testes - WEB
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: resultado-testes-web
+          name: robot-framework-report-web
           path: results/web/
 
   merge:
@@ -81,32 +81,22 @@ jobs:
       - name: Install dependencies
         run: |
           pip install robotframework
-          pip install robotframework-requests
-          pip install robotframework-faker
-          pip install robotframework-jsonlibrary
-          pip install setuptools
-          pip install robotframework-seleniumlibrary
 
       - name: Download Artifacts - API
         uses: actions/download-artifact@v4
         with:
-          name: resultado-testes-api
+          name: robot-framework-report-api
           path: results/api/
 
       - name: Download Artifacts - WEB
         uses: actions/download-artifact@v4
         with:
-          name: resultado-testes-web
+          name: robot-framework-report-web
           path: results/web/
-
-      - name: List Files in Results Directory
-        run: |
-          echo "Verificando arquivos no diretório de resultados (API e WEB):"
-          ls -R results/
 
       - name: Merge Reports
         run: |
-          rebot --merge results/api/output_api.xml results/web/output_web.xml --output merged_output.xml
+          rebot --merge results/api/output.xml results/web/output.xml --output merged_output.xml
           ls -a
 
       - name: Upload Merge Report
@@ -140,8 +130,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./merged_output.xml
+          path: ./
 
       - name: Deploy to Github Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
