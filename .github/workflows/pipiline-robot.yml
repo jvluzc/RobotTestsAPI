@@ -8,30 +8,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout do Repository
         # run: echo Fazendo checkout do repositorio
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Istalação do Python
         # run: echo Instalação da versão 3.12 do Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
+      - name: Instalação das Dependências
         # run: echo Instalação das depedências do Projeto
         run: |
           echo Instalação das depedências do Projeto
           pip install robotframework
           pip install robotframework-requests
 
-      - name: Run Robot Framework tests
+      - name: Executando os Testes de API com Robot Framework
         # run: echo Executando os testes de API do Robot
         run: |
           echo Executando os testes de API do Robot
           robot --name "API and Web Tests" --outputdir results/ tests/api/ 
       
-      - name: Test Report
+      - name: Salvando o Report de Testes de API - Robot
         # run: echo Salvando o Report dos Testes
         uses: actions/upload-artifact@v4
         if: always()
@@ -44,29 +44,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout do Repository
         # run: echo Fazendo checkout do repositorio
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Istalação do Python
         # run: echo Instalação da versão 3.12 do Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
+      - name: Instalação das Dependências
         # run: echo Instalação das depedências do Projeto
         run: |
           echo Instalação das depedências do Projeto
           pip install robotframework-seleniumlibrary
 
-      - name: Run Robot Framework tests
+      - name: Executando os Testes de WEB com Robot Framework
         # run: echo Executando os testes de API do Robot
         run: |
-          echo Executando os testes de API do Robot
+          echo Executando os testes de Web do Robot
           robot --name "API and Web Tests" --outputdir results/ tests/web/
       
-      - name: Test Report
+      - name: Salvando o Report de Testes WEB - Robot
         # run: echo Salvando o Report dos Testes
         uses: actions/upload-artifact@v4
         if: always()
@@ -82,29 +82,29 @@ jobs:
       - test_web
 
     steps:
-      - name: Set up Python
+      - name: Istalação do Python
         # run: echo Instalação da versão 3.12 do Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
+      - name: Instalação das Dependências
         # run: echo Instalação das depedências do Projeto
         run: |
           echo Instalação das depedências do Projeto
           pip install robotframework
 
-      - name: Download Artifacts
+      - name: Download dos Artefatos Gerados
         uses: actions/download-artifact@v4
         with: 
           path: results/
 
-      - name: Merge Reports
+      - name: Merge dos Reports
         run: |
           rebot --merge results/robot-framework-report-api/output.xml results/robot-framework-report-web/output.xml
           ls -a
 
-      - name: Upload Merge Report
+      - name: Salvando o Report de Testes WEB + API
         # run: echo Salvando o Report dos Testes
         uses: actions/upload-artifact@v4
         if: always()
@@ -128,7 +128,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Download Artifacts
+      - name: Download dos Artefatos
         uses: actions/download-artifact@v4
         with: 
           name: robot-framework-report
