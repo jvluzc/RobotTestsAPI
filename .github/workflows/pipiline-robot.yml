@@ -81,6 +81,8 @@ jobs:
       - name: Install dependencies
         run: |
           pip install robotframework
+          pip install robotframework-requests
+          pip install robotframework-seleniumlibrary
 
       - name: Download Artifacts - API
         uses: actions/download-artifact@v4
@@ -93,6 +95,9 @@ jobs:
         with:
           name: robot-framework-report-web
           path: results/
+
+      - name: Verificar arquivos gerados
+        run: ls -l results/
 
       - name: Merge Reports
         run: |
