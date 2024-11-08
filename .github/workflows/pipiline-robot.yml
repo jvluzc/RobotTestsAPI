@@ -24,6 +24,8 @@ jobs:
           echo Instalação das depedências do Projeto
           pip install robotframework
           pip install robotframework-requests
+          pip install robotframework-faker
+          pip install robotframework-jsonlibrary
 
       - name: Executando os Testes de API com Robot Framework
         # run: echo Executando os testes de API do Robot
@@ -58,6 +60,7 @@ jobs:
         # run: echo Instalação das depedências do Projeto
         run: |
           echo Instalação das depedências do Projeto
+          pip install robotframework
           pip install robotframework-seleniumlibrary
 
       - name: Executando os Testes de WEB com Robot Framework
