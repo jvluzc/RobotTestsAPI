@@ -114,7 +114,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: robot-framework-report-merge
+          name: robot-framework-report-merge-api-web-postman
           path: ./*.html
 
   deploy:
@@ -136,7 +136,7 @@ jobs:
       - name: Download dos Artefatos
         uses: actions/download-artifact@v4
         with: 
-          name: robot-framework-report
+          name: robot-framework-report-merge-api-web-postman
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
