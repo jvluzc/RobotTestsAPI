@@ -38,3 +38,96 @@ jobs:
         with:
           name: robot-framework-report-api
           path: results/output_api.xml
+
+  test_web:
+    name: Web Tests - Robot
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório - WEB
+        uses: actions/checkout@v4
+
+      - name: Instalação e Configuração do Python - WEB
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar Dependências do Projeto - WEB
+        run: |
+          pip install robotframework-seleniumlibrary
+
+      - name: Execução dos Testes WEB com Robot
+        run: |
+          mkdir -p results
+          robot --name "Web Tests" --outputdir results/ --output results/output_web.xml tests/web/
+
+      - name: Resultados dos Testes - WEB
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: robot-framework-report-web
+          path: results/output_web.xml
+
+  merge:
+    name: Merge Reports
+    runs-on: ubuntu-latest
+    needs:
+      - test_api
+      - test_web
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install robotframework
+
+      - name: Download Artifacts - API
+        uses: actions/download-artifact@v4
+        with:
+          name: robot-framework-report-api
+          path: results/
+
+      - name: Download Artifacts - WEB
+        uses: actions/download-artifact@v4
+        with:
+          name: robot-framework-report-web
+          path: results/
+
+      - name: Verificar arquivos baixados
+        run: ls -l results/
+
+
+
+  deploy:
+    name: Deploy GitHub Pages 🌐
+    runs-on: ubuntu-latest
+    needs:
+      - merge
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: https://jvluzc.github.io/RobotTestsAPI/report.html
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: robot-framework-report
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./merged_output.xml
+
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
