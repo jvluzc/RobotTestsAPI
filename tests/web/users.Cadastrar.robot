@@ -1,73 +1,73 @@
-# *** Settings ***
-# Resource        ../../resources/web/keywords_login.resource
-# Resource        ../../resources/web/keywords_users.resource
-# Resource        ../../resources/web/keywords_randomico.resource
-# Test Setup      Abrir Navegador
-# Test Teardown   Fechar Navegador
+*** Settings ***
+Resource        ../../resources/web/keywords_login.resource
+Resource        ../../resources/web/keywords_users.resource
+Resource        ../../resources/web/keywords_randomico.resource
+Test Setup      Abrir Navegador
+Test Teardown   Fechar Navegador
 
 
-# *** Test Cases ***
+*** Test Cases ***
 
-# [CT1] - Cadastrar usuário com dados válidos (caminho feliz)
-#     ${nomeCompleto}=     Gerar Nome Completo
-#     ${cpf}=              Gerar Numero de CPF randômico
-#     ${email}=            Gerar E-mail Randômico (@dominio.com.br)
-#     Acessar tela de login
-#     Digitar e-mail e senha    
-#     ...    sysadmin@qacoders.com    
-#     ...    1234@Test
-#     Clicar no botão ENTRAR
-#     Validar login com sucesso no sistema
-#     Acessar tela de Usuários
-#     Cadastrar Novo Usuário    
-#     ...    ${nomeCompleto}
-#     ...    ${email}    
-#     ...    ADMIN    
-#     ...    ${cpf}    
-#     ...    abcd3fgH#    
-#     ...    abcd3fgH#
-#     Selecionar o botão "SALVAR"
-#     Validar redirecionamento para Tela de Cadastro de Usuários
+[CT1] - Cadastrar usuário com dados válidos (caminho feliz)
+    ${nomeCompleto}=     Gerar Nome Completo
+    ${cpf}=              Gerar Numero de CPF randômico
+    ${email}=            Gerar E-mail Randômico (@dominio.com.br)
+    Acessar tela de login
+    Digitar e-mail e senha    
+    ...    sysadmin@qacoders.com    
+    ...    1234@Test
+    Clicar no botão ENTRAR
+    Validar login com sucesso no sistema
+    Acessar tela de Usuários
+    Cadastrar Novo Usuário    
+    ...    ${nomeCompleto}
+    ...    ${email}    
+    ...    ADMIN    
+    ...    ${cpf}    
+    ...    abcd3fgH#    
+    ...    abcd3fgH#
+    Selecionar o botão "SALVAR"
+    Validar redirecionamento para Tela de Cadastro de Usuários
 
-# [CT2] - Cadastrar com campo "Nome Completo" vazio
-#     ${cpf}=              Gerar Numero de CPF randômico
-#     ${email}=            Gerar E-mail Randômico (@dominio.com.br)
-#     Acessar tela de login
-#     Digitar e-mail e senha    
-#     ...    sysadmin@qacoders.com    
-#     ...    1234@Test
-#     Clicar no botão ENTRAR
-#     Validar login com sucesso no sistema
-#     Acessar tela de Usuários
-#     Cadastrar Novo Usuário    
-#     ...    
-#     ...    ${email}    
-#     ...    ADMIN    
-#     ...    ${cpf}    
-#     ...    abcd3fgH#    
-#     ...    abcd3fgH#
-#     Selecionar o botão "SALVAR"
-#     Mensagem de ERRO: 'Nome Completo' Obrigatório
+[CT2] - Cadastrar com campo "Nome Completo" vazio
+    ${cpf}=              Gerar Numero de CPF randômico
+    ${email}=            Gerar E-mail Randômico (@dominio.com.br)
+    Acessar tela de login
+    Digitar e-mail e senha    
+    ...    sysadmin@qacoders.com    
+    ...    1234@Test
+    Clicar no botão ENTRAR
+    Validar login com sucesso no sistema
+    Acessar tela de Usuários
+    Cadastrar Novo Usuário    
+    ...    
+    ...    ${email}    
+    ...    ADMIN    
+    ...    ${cpf}    
+    ...    abcd3fgH#    
+    ...    abcd3fgH#
+    Selecionar o botão "SALVAR"
+    Mensagem de ERRO: 'Nome Completo' Obrigatório
 
-# [CT3] - Cadastrar com campo "Nome Completo" contendo apenas 1 palavra
-#     ${cpf}=              Gerar Numero de CPF randômico
-#     ${email}=            Gerar E-mail Randômico (@dominio.com.br)
-#     Acessar tela de login
-#     Digitar e-mail e senha    
-#     ...    sysadmin@qacoders.com    
-#     ...    1234@Test
-#     Clicar no botão ENTRAR
-#     Validar login com sucesso no sistema
-#     Acessar tela de Usuários
-#     Cadastrar Novo Usuário    
-#     ...    testetestrrrr
-#     ...    ${email}    
-#     ...    ADMIN    
-#     ...    ${cpf}    
-#     ...    abcd3fgH#    
-#     ...    abcd3fgH#
-#     Selecionar o botão "SALVAR"
-#     Alerta de ERRO: campo Nome Completo
+[CT3] - Cadastrar com campo "Nome Completo" contendo apenas 1 palavra
+    ${cpf}=              Gerar Numero de CPF randômico
+    ${email}=            Gerar E-mail Randômico (@dominio.com.br)
+    Acessar tela de login
+    Digitar e-mail e senha    
+    ...    sysadmin@qacoders.com    
+    ...    1234@Test
+    Clicar no botão ENTRAR
+    Validar login com sucesso no sistema
+    Acessar tela de Usuários
+    Cadastrar Novo Usuário    
+    ...    testetestrrrr
+    ...    ${email}    
+    ...    ADMIN    
+    ...    ${cpf}    
+    ...    abcd3fgH#    
+    ...    abcd3fgH#
+    Selecionar o botão "SALVAR"
+    Alerta de ERRO: campo Nome Completo
 
 # [CT4] - Cadastrar com campo "Nome Completo contendo 100 caracteres"
     

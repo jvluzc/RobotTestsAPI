@@ -1,89 +1,89 @@
-# *** Settings ***
-# Resource    ../../resources/api/login_keywords.robot
-# Resource    ../../resources/api/company_keywords.robot
-# Resource    ../../resources/api/randomicos_keywords.robot
-# Documentation    Tests Cases para validar a PBI de "Editar Cadastro de Empresa": feature de "Company".
+*** Settings ***
+Resource    ../../resources/api/login_keywords.robot
+Resource    ../../resources/api/company_keywords.robot
+Resource    ../../resources/api/randomicos_keywords.robot
+Documentation    Tests Cases para validar a PBI de "Editar Cadastro de Empresa": feature de "Company".
 
-# *** Test Cases ***
-# # comando rodar os testes: robot -d ./results .\tests\company_EditarEmpresa.robot
+*** Test Cases ***
+# comando rodar os testes: robot -d ./results .\tests\company_EditarEmpresa.robot
 
-# Editar Cadastro de Empresa Com Sucesso
-#     ${corporate_Name}=     Gerar Nome Empresa
-#     ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
+Editar Cadastro de Empresa Com Sucesso
+    ${corporate_Name}=     Gerar Nome Empresa
+    ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
 
-#     Editar Empresa Cadastrada    
-#     ...    ${corporate_Name}
-#     ...    12126456000155
-#     ...    test@test.com
-#     ...    ${matriz}
-#     ...    Marcio
-#     ...    99999999999999
-#     ...    Testes
+    Editar Empresa Cadastrada    
+    ...    ${corporate_Name}
+    ...    12126456000155
+    ...    test@test.com
+    ...    ${matriz}
+    ...    Marcio
+    ...    99999999999999
+    ...    Testes
 
-# [CT01] Buscar empresa para edição dos dados da empresa e validar se os campos obrigatórios já estão preenchidos
-#     ${corporate_Name}=     Gerar Nome Empresa
-#     ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
+[CT01] Buscar empresa para edição dos dados da empresa e validar se os campos obrigatórios já estão preenchidos
+    ${corporate_Name}=     Gerar Nome Empresa
+    ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
 
-#     Editar Empresa Cadastrada    
-#     ...    ${corporate_Name}
-#     ...    12126456000155
-#     ...    test@test.com
-#     ...    ${matriz}
-#     ...    Marcio
-#     ...    99999999999999
-#     ...    Testes
+    Editar Empresa Cadastrada    
+    ...    ${corporate_Name}
+    ...    12126456000155
+    ...    test@test.com
+    ...    ${matriz}
+    ...    Marcio
+    ...    99999999999999
+    ...    Testes
 
-# [CT02] Editar todos os dados de empresa já cadastrada no sistema com dados válidos e enviar com sucesso (Caminho Feliz)
-#     ${corporate_Name}=     Gerar Nome Empresa
-#     ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
+[CT02] Editar todos os dados de empresa já cadastrada no sistema com dados válidos e enviar com sucesso (Caminho Feliz)
+    ${corporate_Name}=     Gerar Nome Empresa
+    ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
 
-#     Editar Empresa Cadastrada    
-#     ...    Edicao gxsgsf Teste
-#     ...    12126456000155
-#     ...    test@testjoao.com.br
-#     ...    ${matriz}
-#     ...    JoaoTeste
-#     ...    11111111111
-#     ...    EdicaoTeste
+    Editar Empresa Cadastrada    
+    ...    Edicao gxsgsf Teste
+    ...    12126456000155
+    ...    test@testjoao.com.br
+    ...    ${matriz}
+    ...    JoaoTeste
+    ...    11111111111
+    ...    EdicaoTeste
 
-# [CT03] Editar campo NOME da empresa (corporateName) com caracteres válidos (Alfanuméricos)
-#     ${corporate_Name}=     Gerar Nome Empresa
-#     ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
+[CT03] Editar campo NOME da empresa (corporateName) com caracteres válidos (Alfanuméricos)
+    ${corporate_Name}=     Gerar Nome Empresa
+    ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
 
-#     Editar Empresa Cadastrada    
-#     ...    Edicao 123abcDD alfanumérica
-#     ...    12126456000155
-#     ...    test@testjoao.com.br
-#     ...    ${matriz}
-#     ...    JoaoTeste
-#     ...    11111111111
-#     ...    EdicaoTeste
+    Editar Empresa Cadastrada    
+    ...    Edicao 123abcDD alfanumérica
+    ...    12126456000155
+    ...    test@testjoao.com.br
+    ...    ${matriz}
+    ...    JoaoTeste
+    ...    11111111111
+    ...    EdicaoTeste
 
-# [CT04] Editar campo NOME da empresa (corporateName) com caracteres inválidos (Especiais)
-#     ${corporate_Name}=     Gerar Nome Empresa
-#     ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
+[CT04] Editar campo NOME da empresa (corporateName) com caracteres inválidos (Especiais)
+    ${corporate_Name}=     Gerar Nome Empresa
+    ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
 
-#     Editar Empresa Cadastrada    
-#     ...    Edicao %$#$&¨%
-#     ...    12126456000155
-#     ...    test@testjoao.com.br
-#     ...    ${matriz}
-#     ...    JoaoTeste
-#     ...    11111111111
-#     ...    EdicaoTeste
+    Editar Empresa Cadastrada    
+    ...    Edicao %$#$&¨%
+    ...    12126456000155
+    ...    test@testjoao.com.br
+    ...    ${matriz}
+    ...    JoaoTeste
+    ...    11111111111
+    ...    EdicaoTeste
 
-# [CT05] Editar campo NOME (corporateName) da empresa enviando com o campo vazio (Campo Obrigatório)
-#     ${corporate_Name}=     Gerar Nome Empresa
-#     ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
+[CT05] Editar campo NOME (corporateName) da empresa enviando com o campo vazio (Campo Obrigatório)
+    ${corporate_Name}=     Gerar Nome Empresa
+    ${matriz}=  Gerar Valor Alfanumerico 14 caracteres
 
-#     Editar Empresa Cadastrada    
-#     ...    
-#     ...    12126456000155
-#     ...    test@testjoao.com.br
-#     ...    ${matriz}
-#     ...    JoaoTeste
-#     ...    11111111111
-#     ...    EdicaoTeste
+    Editar Empresa Cadastrada    
+    ...    
+    ...    12126456000155
+    ...    test@testjoao.com.br
+    ...    ${matriz}
+    ...    JoaoTeste
+    ...    11111111111
+    ...    EdicaoTeste
 
 # [CT06] Editar campo NOME da empresa (corporateName) enviando com o campo nulo (Campo Obrigatório)
 #     ${corporate_Name}=     Gerar Nome Empresa
