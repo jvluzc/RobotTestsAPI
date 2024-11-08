@@ -27,14 +27,14 @@ jobs:
       - name: Execução dos Testes de API com Robot
         run: |
           mkdir -p results
-          robot --name "API Tests" --outputdir results/ tests/api/
+          robot --name "API Tests" --outputdir results/ --output results/output_api.xml tests/api/
 
       - name: Resultados dos Testes - API
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: robot-framework-report-api
-          path: results/
+          path: results/output_api.xml
 
   test_web:
     name: Web Tests - Robot
@@ -56,14 +56,14 @@ jobs:
       - name: Execução dos Testes WEB com Robot
         run: |
           mkdir -p results
-          robot --name "Web Tests" --outputdir results/ tests/web/
+          robot --name "Web Tests" --outputdir results/ --output results/output_web.xml tests/web/
 
       - name: Resultados dos Testes - WEB
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: robot-framework-report-web
-          path: results/
+          path: results/output_web.xml
 
   merge:
     name: Merge Reports
